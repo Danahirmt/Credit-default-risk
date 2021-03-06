@@ -1,0 +1,13 @@
+name: credit
+channels:
+  - conda-forge
+dependencies:
+  - numpy
+  - pandas
+  - jupyterlab
+  - pip
+  - tqdm
+  - xlrd
+  - pyarrow
+  - matplotlib
+  - seaborn
