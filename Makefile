@@ -9,7 +9,7 @@ DOCKER_PARAMETERS := \
 	-w /Credit-default-risk
 
 init:
-	docker build . -t ${IMAGE} && mkdir 
+	docker build . -t ${IMAGE} 
 
 jupyter:
 	docker run -d --rm ${DOCKER_PARAMETERS} -e HOME=/tmp -p ${PORT}:8888 ${IMAGE} \
