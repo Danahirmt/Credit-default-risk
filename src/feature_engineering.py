@@ -40,10 +40,6 @@ def one_hot_encoding(train:pd.DataFrame, test:pd.DataFrame, categoric):
 
     return train, test, ohe_cols
 
-app_train, app_test = process_categoric(app_train_clean,app_test_clean, categoric)
-app_train.to_pickle('/Credit-default-risk/data/app_train.p')
-app_test.to_pickle('/Credit-default-risk/data/app_test.p')
-
 
 
 def impute_scale(app_train, app_test):
