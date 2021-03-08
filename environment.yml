@@ -11,5 +11,6 @@ dependencies:
   - pyarrow
   - matplotlib
   - seaborn
-  - pip
-      - sklearn
+  - pip:
+    - sklearn
+    - xgboost

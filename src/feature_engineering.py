@@ -4,10 +4,12 @@
 import pandas as pd 
 import numpy as np
 from itertools import chain
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, MinMaxScaler
+from sklearn.impute import SimpleImputer
 
 from src.clean import app_train_clean, app_test_clean
 from src.variables import target, id_var, categoric, numeric
+
 
 def process_categoric(train:pd.DataFrame, test:pd.DataFrame, categoric:list):
   
@@ -15,7 +17,7 @@ def process_categoric(train:pd.DataFrame, test:pd.DataFrame, categoric:list):
 
     train, test, ohe_cols = one_hot_encoding(train, test, categoric)
 
-    return train, test
+    return train.drop(categoric, axis = 1), test.drop(categoric, axis = 1)
 
 def cat_na_assign(train:pd.DataFrame, test:pd.DataFrame, categoric):
     for i in categoric :
@@ -39,3 +41,27 @@ def one_hot_encoding(train:pd.DataFrame, test:pd.DataFrame, categoric):
     return train, test, ohe_cols
 
 app_train, app_test = process_categoric(app_train_clean,app_test_clean, categoric)
+app_train.to_pickle('/Credit-default-risk/data/app_train.p')
+app_test.to_pickle('/Credit-default-risk/data/app_test.p')
+
+
+
+def impute_scale(app_train, app_test):
+    # Drop the target and id from the training data
+    train = app_train.copy()
+    # Feature names
+    features = list(train.columns)
+    # Copy of the testing data
+    test = app_test.copy()
+    # Median imputation of missing values
+    imputer = SimpleImputer(strategy = 'median')
+    # Scale each feature to 0-1
+    scaler = MinMaxScaler(feature_range = (0, 1))
+
+    imputer.fit(train)
+    train = imputer.transform(train)
+    scaler.fit(train)
+    train = scaler.transform(train)
+    test = scaler.transform(test)
+    
+    return train, test , features
