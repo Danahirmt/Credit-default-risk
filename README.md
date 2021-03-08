@@ -11,6 +11,7 @@ make init
 
 ## Organization
 
+```
 ├── Dockerfile
 ├── Makefile
 ├── README.md
@@ -23,3 +24,4 @@ make init
     ├── feature_engineering.py
     ├── read_data.py
     └── variables.py
+```
